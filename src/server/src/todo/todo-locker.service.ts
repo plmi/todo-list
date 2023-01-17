@@ -5,15 +5,15 @@ import { TodoItem } from "src/models/todo/todo-item";
 
 @Injectable()
 export class TodoLocker {
-  public lockItem(todoListItem: TodoItem): void {
-    if (todoListItem == null) {
-      throw new ArgumentNullError('todoListItem');
+  public lockItem(todoItem: TodoItem): void {
+    if (todoItem == null) {
+      throw new ArgumentNullError('todoItem');
     }
 
-    if (todoListItem.done) {
+    if (todoItem.done) {
       throw new TodoItemAlreadyDoneError(`Can't lock an already done item.`);
     }
 
-    todoListItem.locked = true;
+    todoItem.locked = true;
   }
 }
