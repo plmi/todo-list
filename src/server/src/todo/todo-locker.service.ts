@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ArgumentNullError } from "src/exceptions/argument-null";
-import { TodoListItemAlreadyDoneError as TodoItemAlreadyDoneError } from "src/exceptions/todo-item-already-done";
+import { TodoItemAlreadyDoneError as TodoItemAlreadyDoneError } from "src/exceptions/todo-item-already-done";
 import { TodoItem } from "src/models/todo/todo-item";
 
 @Injectable()
