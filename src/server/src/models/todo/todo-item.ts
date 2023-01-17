@@ -8,5 +8,5 @@ export class TodoItem {
     public priority: number) {
       this.locked = false;
       this.done = false;
-    }
+  }
 }
