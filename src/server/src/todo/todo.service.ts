@@ -15,13 +15,19 @@ export class TodoService {
     });
   }
 
-  public lockItem(id: number): void {
+  public getTodoItemById(id: number): TodoItem {
     // TODO: add repository
     const item: TodoItem | undefined = this.getTodoItems().find(x => x.id == id);
 
     if (item === undefined) {
       throw new TodoItemNotFoundError(`Can't find item with id ${id}`);
     }
+
+    return item;
+  }
+
+  public lockItem(id: number): void {
+    const item: TodoItem = this.getTodoItemById(id);
 
     this.todoLocker.lockItem(item);
   }
