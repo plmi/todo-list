@@ -20,6 +20,8 @@ export class TodoController {
       return this.todoService.getTodoItemById(params.id);
     }
     catch (error) {
+      // TODO: implement proper error handling:
+      // https://docs.nestjs.com/exception-filters
       if (error instanceof TodoItemNotFoundError) {
         throw new HttpException(error.message, HttpStatus.NOT_FOUND);
       }
