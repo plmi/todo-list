@@ -1,4 +1,4 @@
-export class TodoItem {
+export class TodoItemDto {
   public locked: boolean;
   public done: boolean;
 

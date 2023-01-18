@@ -1,34 +1,47 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { TodoItem } from "src/entities/todo-item.entity";
 import { TodoItemNotFoundError } from "src/exceptions/todo-item-not-found";
-import { TodoItem } from "src/models/todo/todo-item";
+import { TodoItemDto } from "src/models/todo/todo-item";
+import { Repository } from "typeorm";
 import { TodoLocker } from "./todo-locker.service";
 
 @Injectable()
 export class TodoService {
-  
-  constructor(private readonly todoLocker: TodoLocker) { }
+  constructor(
+    private readonly todoLocker: TodoLocker,
+    @InjectRepository(TodoItem)
+    private readonly todoItemRepository: Repository<TodoItem>) { }
 
-  public getTodoItems(): TodoItem[] {
-    // TODO: add repository
-    return Array.from(Array(3), (_, id) => {
-      return new TodoItem(id, `Item ${id}`, id + 1)
+  public async getTodoItems(): Promise<TodoItemDto[]> {
+    return await this.todoItemRepository.find().then(entities => {
+      return entities.map(x => {
+        return new TodoItemDto(x.id, x.content, x.priority);
+      });
     });
   }
 
-  public getTodoItemById(id: number): TodoItem {
-    // TODO: add repository
-    const item: TodoItem | undefined = this.getTodoItems().find(x => x.id == id);
+  public async getTodoItemById(id: number): Promise<TodoItemDto> {
+    const item = await this.todoItemRepository.findOneBy({id});
 
     if (item === undefined) {
       throw new TodoItemNotFoundError(`Can't find item with id ${id}`);
     }
 
-    return item;
+    // TODO: add mapper
+    return new TodoItemDto(item!.id, item!.content, item!.priority);
   }
 
-  public lockItem(id: number): void {
-    const item: TodoItem = this.getTodoItemById(id);
+  public async lockTodoItem(id: number): Promise<void> {
+    const entity = await this.getTodoItemById(id);
 
-    this.todoLocker.lockItem(item);
+    this.todoLocker.lockItem(entity);
+    await this.todoItemRepository.save(entity);
+  }
+
+  public async createTodoItem(item: TodoItemDto): Promise<void> {
+    const entity = new TodoItemDto(item.id, item.content, item.priority);
+
+    await this.todoItemRepository.save(entity);
   }
 }

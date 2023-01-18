@@ -1,0 +1,14 @@
+version: "3"
+services:
+  database:
+    container_name: todo_database
+    image: postgres:10.7
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      PGDATA: /data/postgres
+    volumes:
+      - ./scripts/initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5445:5432"
+    restart: unless-stopped

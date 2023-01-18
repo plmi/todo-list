@@ -1,6 +1,7 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Put } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
 import { TodoItemAlreadyDoneError } from "src/exceptions/todo-item-already-done";
 import { TodoItemNotFoundError } from "src/exceptions/todo-item-not-found";
+import { TodoItemDto } from "src/models/todo/todo-item";
 import { TodoService } from "./todo.service";
 
 @Controller('todo')
@@ -30,10 +31,15 @@ export class TodoController {
     }
   }
 
+  @Post()
+  async createItem(@Body() item: TodoItemDto): Promise<void> {
+    await this.todoService.createTodoItem(item);
+  }
+
   @Put('lock/:id')
   lockItem(@Param() params): void {
     try {
-      this.todoService.lockItem(params.id);
+      this.todoService.lockTodoItem(params.id);
     }
     catch (error) {
       if (error instanceof TodoItemNotFoundError) {

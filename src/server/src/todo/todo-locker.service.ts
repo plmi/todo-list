@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
+import { TodoItem } from "src/entities/todo-item.entity";
 import { ArgumentNullError } from "src/exceptions/argument-null";
 import { TodoItemAlreadyDoneError as TodoItemAlreadyDoneError } from "src/exceptions/todo-item-already-done";
-import { TodoItem } from "src/models/todo/todo-item";
 
 @Injectable()
 export class TodoLocker {
