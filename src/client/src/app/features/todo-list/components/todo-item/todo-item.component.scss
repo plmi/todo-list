@@ -1,0 +1,23 @@
+h2 {
+  margin: 0px;
+  font-size: 1.5rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  margin: 2px 0px;
+
+  label {
+    width: 100%;
+    text-indent: 20px;
+  }
+
+  span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: normal;
+  }
+}

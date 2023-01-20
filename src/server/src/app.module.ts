@@ -8,7 +8,7 @@ import 'dotenv/config';
 @Module({
   imports: [
     TodoModule,
-    AppSchemaModule
+    AppSchemaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

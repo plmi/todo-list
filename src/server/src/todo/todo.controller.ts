@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from "@nestjs/common";
 import { TodoItemAlreadyDoneError } from "src/exceptions/todo-item-already-done";
 import { TodoItemNotFoundError } from "src/exceptions/todo-item-not-found";
 import { TodoItemDto } from "src/models/todo/todo-item";
@@ -48,6 +48,20 @@ export class TodoController {
 
       if (error instanceof TodoItemAlreadyDoneError) {
         throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+      }
+
+      throw error;
+    }
+  }
+
+  @Delete(':id')
+  public async deleteTodoItem(@Param() params): Promise<void> {
+    try {
+      await this.todoService.deleteTodoItem(params.id);
+    }
+    catch (error) {
+      if (error instanceof TodoItemNotFoundError) {
+        throw new HttpException(error.message, HttpStatus.NOT_FOUND);
       }
 
       throw error;

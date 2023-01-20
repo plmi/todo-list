@@ -1,0 +1,9 @@
+<div class="items">
+  <h1>To-Do List</h1>
+
+  <app-todo-form (created)="onCreated()"></app-todo-form>
+
+  <ng-container *ngFor="let item of todoItems">
+    <app-todo-item [item]="item" (deleted)="refresh$.next()"></app-todo-item>
+  </ng-container>
+</div>

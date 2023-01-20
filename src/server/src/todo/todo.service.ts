@@ -24,7 +24,7 @@ export class TodoService {
   public async getTodoItemById(id: number): Promise<TodoItemDto> {
     const item = await this.todoItemRepository.findOneBy({id});
 
-    if (item === undefined) {
+    if (item === null) {
       throw new TodoItemNotFoundError(`Can't find item with id ${id}`);
     }
 
@@ -40,8 +40,19 @@ export class TodoService {
   }
 
   public async createTodoItem(item: TodoItemDto): Promise<void> {
-    const entity = new TodoItemDto(item.id, item.content, item.priority);
+    const entity = new TodoItemDto(item.id, item.content, item.priority || 0);
 
     await this.todoItemRepository.save(entity);
+  }
+
+  public async deleteTodoItem(id: number): Promise<void> {
+    const item = await this.todoItemRepository.findOneBy({id});
+
+    if (item === null) {
+      throw new TodoItemNotFoundError(`Can't find item with id ${id}`);
+    }
+
+
+    await this.todoItemRepository.remove(item as TodoItem);
   }
 }
