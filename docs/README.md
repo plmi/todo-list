@@ -1,6 +1,6 @@
-# Setup
+## Infrastructure Setup
 
-Setup pgadmin
+(optional) Setup pgadmin
 ```bash
 $ sudo mkdir /var/lib/pgadmin
 $ sudo mkdir /var/log/pgadmin
@@ -20,6 +20,20 @@ Re-create database from scratch
 $ docker-compose up --force-recreate
 ```
 
+### Migrations
+
+Generate migration
+```bash
+$ npm run migration:generate src/database/migrations/<name>
+```
+
+Apply migration
+```bash
+$ npm run migration:up
+```
+
+## Application Configuration
+
 Configure application via `.env` file
 ```bash
 TYPEORM_HOST = <hostname>
@@ -31,7 +45,9 @@ TYPEORM_LOGGING = <true|false>
 APP_PORT = <port>
 ```
 
-Start backend
+## Run application
+
+Run for client and server indiviual
 ```bash
 $ npm start
 ```

@@ -1,6 +1,6 @@
 <div class="item">
   <label>{{item.content}}</label>
-  <mat-checkbox></mat-checkbox>
+  <mat-checkbox [(ngModel)]="item.done" (ngModelChange)="onDoneStateChanged(item.id, $event)"></mat-checkbox>
   <button mat-icon-button color="primary" aria-label="trash icon" (click)="onDelete(item.id)">
     <mat-icon>delete</mat-icon>
   </button>

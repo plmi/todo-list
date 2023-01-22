@@ -21,4 +21,8 @@ export class TodoListItemComponent {
     await firstValueFrom(this._todoService.deleteTodoIdem(id));
     this.deleted.emit();
   }
+
+  public async onDoneStateChanged(id: number, done: boolean) {
+    await firstValueFrom(this._todoService.updateDone({id, done}));
+  }
 }

@@ -9,11 +9,5 @@ export class TodoItem {
   content: string;
 
   @Column()
-  priority: number;
-
-  @Column()
-  locked: boolean;
-
-  @Column()
   done: boolean;
 }

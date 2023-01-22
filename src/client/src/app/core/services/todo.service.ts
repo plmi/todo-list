@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { TodoItem } from "src/app/shared/models/todo-item";
+import { UpdateDone } from "src/app/shared/models/update-done";
 
 @Injectable({providedIn: 'root'})
 export class TodoService {
@@ -30,5 +31,12 @@ export class TodoService {
   public deleteTodoIdem(id: number): Observable<void> {
     return this._http
       .delete<void>(`${this._endpoint}/todo/${id}`);
+  }
+
+  public updateDone(updateDone: UpdateDone): Observable<void> {
+    return this._http
+      .put<void>(`${this._endpoint}/todo/done`,
+        updateDone,
+        this.defaultHttpOptions);
   }
 }
