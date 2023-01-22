@@ -3,11 +3,10 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { TodoItem } from "src/app/shared/models/todo-item";
 import { UpdateDone } from "src/app/shared/models/update-done";
+import { environment } from "src/environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class TodoService {
-  private readonly _endpoint: string = 'http://localhost:3002';
-
   constructor(private _http: HttpClient) {}
 
   public get defaultHttpOptions() {
@@ -18,24 +17,24 @@ export class TodoService {
 
   public getTodoItems(): Observable<TodoItem[]> {
     return this._http
-      .get<TodoItem[]>(`${this._endpoint}/todo`);
+      .get<TodoItem[]>(`${environment.apiUrl}/todo`);
   }
 
   public createTodoItem(todoItem: TodoItem): Observable<void> {
     return this._http
-      .post<void>(`${this._endpoint}/todo`,
+      .post<void>(`${environment.apiUrl}/todo`,
         JSON.stringify(todoItem),
         this.defaultHttpOptions);
   }
 
   public deleteTodoIdem(id: number): Observable<void> {
     return this._http
-      .delete<void>(`${this._endpoint}/todo/${id}`);
+      .delete<void>(`${environment.apiUrl}/todo/${id}`);
   }
 
   public updateDone(updateDone: UpdateDone): Observable<void> {
     return this._http
-      .put<void>(`${this._endpoint}/todo/done`,
+      .put<void>(`${environment.apiUrl}/todo/done`,
         updateDone,
         this.defaultHttpOptions);
   }
